@@ -24,3 +24,78 @@ ImportError: `pypdf` package not found, please install it with `pip install pypd
 2026-09-05 11:52:35,266 - agent - INFO - vector_store.py:96 - [加载知识库]C:\Users\ASUS\Desktop\萌宠智能客服\data\宠物健康问题检测与处理200条.txt 内容加载成功
 2026-09-05 11:52:36,970 - agent - INFO - vector_store.py:96 - [加载知识库]C:\Users\ASUS\Desktop\萌宠智能客服\data\宠物及宠物用品选购指南200条.txt 内容加载成功
 2026-09-05 11:52:38,842 - agent - INFO - vector_store.py:96 - [加载知识库]C:\Users\ASUS\Desktop\萌宠智能客服\data\宠物维护保养200条.txt 内容加载成功
+2026-09-05 12:36:52,092 - agent - INFO - vector_store.py:96 - [加载知识库]C:\Users\ASUS\Desktop\萌宠智能客服\data\养宠100问（通用版）.pdf 内容加载成功
+2026-09-05 12:36:52,094 - agent - INFO - vector_store.py:74 - [加载知识库]C:\Users\ASUS\Desktop\萌宠智能客服\data\宠物100问.txt内容已经存在知识库内，跳过
+2026-09-05 12:36:52,095 - agent - INFO - vector_store.py:74 - [加载知识库]C:\Users\ASUS\Desktop\萌宠智能客服\data\宠物健康问题检测与处理200条.txt内容已经存在知识库内，跳过
+2026-09-05 12:36:52,097 - agent - INFO - vector_store.py:74 - [加载知识库]C:\Users\ASUS\Desktop\萌宠智能客服\data\宠物及宠物用品选购指南200条.txt内容已经存在知识库内，跳过
+2026-09-05 12:36:52,098 - agent - INFO - vector_store.py:74 - [加载知识库]C:\Users\ASUS\Desktop\萌宠智能客服\data\宠物维护保养200条.txt内容已经存在知识库内，跳过
+2026-09-05 12:37:41,194 - agent - INFO - vector_store.py:74 - [加载知识库]C:\Users\ASUS\Desktop\萌宠智能客服\data\养宠100问（通用版）.pdf内容已经存在知识库内，跳过
+2026-09-05 12:37:41,196 - agent - INFO - vector_store.py:74 - [加载知识库]C:\Users\ASUS\Desktop\萌宠智能客服\data\宠物100问.txt内容已经存在知识库内，跳过
+2026-09-05 12:37:41,197 - agent - INFO - vector_store.py:74 - [加载知识库]C:\Users\ASUS\Desktop\萌宠智能客服\data\宠物健康问题检测与处理200条.txt内容已经存在知识库内，跳过
+2026-09-05 12:37:41,198 - agent - INFO - vector_store.py:74 - [加载知识库]C:\Users\ASUS\Desktop\萌宠智能客服\data\宠物及宠物用品选购指南200条.txt内容已经存在知识库内，跳过
+2026-09-05 12:37:41,199 - agent - INFO - vector_store.py:74 - [加载知识库]C:\Users\ASUS\Desktop\萌宠智能客服\data\宠物维护保养200条.txt内容已经存在知识库内，跳过
+2026-09-05 13:39:20,210 - agent - INFO - middleware.py:40 - [log_before_model]即将调用模型，带有1条消息。
+2026-09-05 13:39:20,211 - agent - DEBUG - middleware.py:42 - [log_before_model]HumanMessage | 金毛要怎么养
+2026-09-05 13:39:21,660 - agent - INFO - middleware.py:19 - [tool monitor]执行工具：rag_summarize
+2026-09-05 13:39:21,661 - agent - INFO - middleware.py:20 - [tool monitor]传入参数：{'query': '金毛饲养方法'}
+2026-09-05 13:39:24,037 - agent - INFO - middleware.py:24 - [tool monitor]工具rag_summarize调用成功
+2026-09-05 13:39:25,578 - agent - INFO - middleware.py:40 - [log_before_model]即将调用模型，带有3条消息。
+2026-09-05 13:39:25,579 - agent - DEBUG - middleware.py:42 - [log_before_model]ToolMessage | 金毛饲养需注意以下几点：提供营养均衡的狗粮，避免喂食人类高盐高糖食物；每天保证充足运动，如散步或玩耍；定期梳理毛发以防打结，保持皮肤清洁；按时接种疫苗和驱虫；给予足够陪伴与训练，培养良好行为习惯。
+2026-09-05 13:42:00,623 - agent - INFO - middleware.py:40 - [log_before_model]即将调用模型，带有1条消息。
+2026-09-05 13:42:00,623 - agent - DEBUG - middleware.py:42 - [log_before_model]HumanMessage | 在我当前所在位置的天气下，怎么保养宠物
+2026-09-05 13:42:04,347 - agent - INFO - middleware.py:19 - [tool monitor]执行工具：get_user_location
+2026-09-05 13:42:04,347 - agent - INFO - middleware.py:20 - [tool monitor]传入参数：{}
+2026-09-05 13:42:04,348 - agent - INFO - middleware.py:24 - [tool monitor]工具get_user_location调用成功
+2026-09-05 13:42:04,409 - agent - INFO - middleware.py:40 - [log_before_model]即将调用模型，带有3条消息。
+2026-09-05 13:42:04,409 - agent - DEBUG - middleware.py:42 - [log_before_model]ToolMessage | 杭州
+2026-09-05 13:42:06,987 - agent - INFO - middleware.py:19 - [tool monitor]执行工具：get_weather
+2026-09-05 13:42:06,988 - agent - INFO - middleware.py:20 - [tool monitor]传入参数：{'city': '杭州'}
+2026-09-05 13:42:06,990 - agent - INFO - middleware.py:24 - [tool monitor]工具get_weather调用成功
+2026-09-05 13:42:07,762 - agent - INFO - middleware.py:40 - [log_before_model]即将调用模型，带有5条消息。
+2026-09-05 13:42:07,762 - agent - DEBUG - middleware.py:42 - [log_before_model]ToolMessage | 城市杭州天气为晴天，气温26摄氏度，空气湿度50%，南风1级，AQI21，最近6小时降雨概率极低
+2026-09-05 13:42:11,562 - agent - INFO - middleware.py:19 - [tool monitor]执行工具：rag_summarize
+2026-09-05 13:42:11,562 - agent - INFO - middleware.py:20 - [tool monitor]传入参数：{'query': '晴天26度湿度50%天气下宠物保养建议'}
+2026-09-05 13:42:12,682 - agent - INFO - middleware.py:24 - [tool monitor]工具rag_summarize调用成功
+2026-09-05 13:42:13,150 - agent - INFO - middleware.py:40 - [log_before_model]即将调用模型，带有7条消息。
+2026-09-05 13:42:13,150 - agent - DEBUG - middleware.py:42 - [log_before_model]ToolMessage | 参考资料中未提及晴天26度湿度50%天气下的宠物保养建议。
+2026-09-05 13:42:16,945 - agent - INFO - middleware.py:19 - [tool monitor]执行工具：rag_summarize
+2026-09-05 13:42:16,947 - agent - INFO - middleware.py:20 - [tool monitor]传入参数：{'query': '春夏季宠物日常护理和晴天宠物照护建议'}
+2026-09-05 13:42:20,389 - agent - INFO - middleware.py:24 - [tool monitor]工具rag_summarize调用成功
+2026-09-05 13:42:22,710 - agent - INFO - middleware.py:40 - [log_before_model]即将调用模型，带有9条消息。
+2026-09-05 13:42:22,711 - agent - DEBUG - middleware.py:42 - [log_before_model]ToolMessage | 春夏季宠物日常护理需注意防暑降温，保持环境通风，提供充足清洁饮水，避免高温时段外出；定期梳理毛发以防打结和散热不良，必要时可适当修剪（但不宜剃光）；加强驱虫，预防跳蚤、蜱虫等寄生虫滋生。晴天照护建议包括避免阳光直射过久，防止中暑或晒伤，外出时选择清晨或傍晚较凉爽时段，并确保宠物有阴凉休息处。
+2026-09-05 13:58:42,296 - agent - INFO - middleware.py:40 - [log_before_model]即将调用模型，带有1条消息。
+2026-09-05 13:58:42,298 - agent - DEBUG - middleware.py:42 - [log_before_model]HumanMessage | 帮我生成报告
+2026-09-05 13:58:44,842 - agent - INFO - middleware.py:19 - [tool monitor]执行工具：get_user_id
+2026-09-05 13:58:44,843 - agent - INFO - middleware.py:20 - [tool monitor]传入参数：{}
+2026-09-05 13:58:44,845 - agent - INFO - middleware.py:24 - [tool monitor]工具get_user_id调用成功
+2026-09-05 13:58:44,934 - agent - INFO - middleware.py:40 - [log_before_model]即将调用模型，带有3条消息。
+2026-09-05 13:58:44,934 - agent - DEBUG - middleware.py:42 - [log_before_model]ToolMessage | 1003
+2026-09-05 13:58:47,137 - agent - INFO - middleware.py:19 - [tool monitor]执行工具：get_current_month
+2026-09-05 13:58:47,138 - agent - INFO - middleware.py:20 - [tool monitor]传入参数：{}
+2026-09-05 13:58:47,140 - agent - INFO - middleware.py:24 - [tool monitor]工具get_current_month调用成功
+2026-09-05 13:58:47,275 - agent - INFO - middleware.py:40 - [log_before_model]即将调用模型，带有5条消息。
+2026-09-05 13:58:47,276 - agent - DEBUG - middleware.py:42 - [log_before_model]ToolMessage | 2025-11
+2026-09-05 13:58:49,492 - agent - INFO - middleware.py:19 - [tool monitor]执行工具：fill_context_for_report
+2026-09-05 13:58:49,492 - agent - INFO - middleware.py:20 - [tool monitor]传入参数：{}
+2026-09-05 13:58:49,494 - agent - INFO - middleware.py:24 - [tool monitor]工具fill_context_for_report调用成功
+2026-09-05 13:58:49,925 - agent - INFO - middleware.py:40 - [log_before_model]即将调用模型，带有7条消息。
+2026-09-05 13:58:49,925 - agent - DEBUG - middleware.py:42 - [log_before_model]ToolMessage | fill_context_for_report已调用
+2026-09-05 13:58:52,325 - agent - INFO - middleware.py:19 - [tool monitor]执行工具：fetch_external_data
+2026-09-05 13:58:52,326 - agent - INFO - middleware.py:20 - [tool monitor]传入参数：{'user_id': '1003', 'month': '2025-11'}
+2026-09-05 13:58:52,331 - agent - INFO - middleware.py:24 - [tool monitor]工具fetch_external_data调用成功
+2026-09-05 13:58:54,389 - agent - INFO - middleware.py:40 - [log_before_model]即将调用模型，带有9条消息。
+2026-09-05 13:58:54,390 - agent - DEBUG - middleware.py:42 - [log_before_model]ToolMessage | {"特征": "柯基 | 5岁 | 90㎡三居", "效率": "腰椎稳定 | 体重正常 | 耳道健康", "耗材": "日均喂食255g | 体重11.2kg(标准) | 食欲稳定", "对比": "日均外出3次共75分钟 | 掉毛减少 | 跳跃控制良好"}
+2026-09-05 14:41:46,568 - agent - INFO - middleware.py:40 - [log_before_model]即将调用模型，带有1条消息。
+2026-09-05 14:41:46,569 - agent - DEBUG - middleware.py:42 - [log_before_model]HumanMessage | 幼犬多久打一次疫苗？
+2026-09-05 14:41:47,807 - agent - INFO - middleware.py:19 - [tool monitor]执行工具：rag_summarize
+2026-09-05 14:41:47,808 - agent - INFO - middleware.py:20 - [tool monitor]传入参数：{'query': '幼犬疫苗接种时间间隔'}
+2026-09-05 14:41:49,409 - agent - INFO - middleware.py:24 - [tool monitor]工具rag_summarize调用成功
+2026-09-05 14:41:49,411 - agent - INFO - middleware.py:40 - [log_before_model]即将调用模型，带有3条消息。
+2026-09-05 14:41:49,413 - agent - DEBUG - middleware.py:42 - [log_before_model]ToolMessage | 幼犬通常在6至8周龄开始接种第一针疫苗，之后每隔2至4周接种一针，直至16周龄左右完成核心疫苗的全程接种。
+2026-09-05 14:46:05,863 - agent - INFO - middleware.py:40 - [log_before_model]即将调用模型，带有1条消息。
+2026-09-05 14:46:05,863 - agent - DEBUG - middleware.py:42 - [log_before_model]HumanMessage | 幼犬多久打一次疫苗？
+2026-09-05 14:46:08,061 - agent - INFO - middleware.py:19 - [tool monitor]执行工具：rag_summarize
+2026-09-05 14:46:08,062 - agent - INFO - middleware.py:20 - [tool monitor]传入参数：{'query': '幼犬疫苗接种时间表 频率'}
+2026-09-05 14:46:09,825 - agent - INFO - middleware.py:24 - [tool monitor]工具rag_summarize调用成功
+2026-09-05 14:46:09,828 - agent - INFO - middleware.py:40 - [log_before_model]即将调用模型，带有3条消息。
+2026-09-05 14:46:09,828 - agent - DEBUG - middleware.py:42 - [log_before_model]ToolMessage | 幼犬通常在6-8周龄开始接种第一针疫苗，之后每隔2-4周接种一次，直至16周龄左右完成基础免疫程序。具体频率和时间可能因疫苗类型和地区要求略有不同。
