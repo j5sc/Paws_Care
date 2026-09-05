@@ -1,0 +1,7 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python -c \"from langchain_community.document_loaders import PyPDFLoader; p = PyPDFLoader\\('data/养宠100问（通用版）.pdf'\\); docs = p.load\\(\\); print\\('总页数:', len\\(docs\\)\\); print\\('=== 第1页前500字 ==='\\); print\\(docs[0].page_content[:500]\\); print\\('=== 最后1页前300字 ==='\\); print\\(docs[-1].page_content[:300]\\)\")"
+    ]
+  }
+}

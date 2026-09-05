@@ -1,0 +1,26 @@
+2026-09-05 11:52:28,796 - agent - ERROR - vector_store.py:99 - [加载知识库]C:\Users\ASUS\Desktop\萌宠智能客服\data\养宠100问（通用版）.pdf加载失败：`pypdf` package not found, please install it with `pip install pypdf`
+Traceback (most recent call last):
+  File "D:\ProgramData\Anaconda3\envs\agent\lib\site-packages\langchain_community\document_loaders\parsers\pdf.py", line 358, in lazy_parse
+    import pypdf
+ModuleNotFoundError: No module named 'pypdf'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\ASUS\Desktop\萌宠智能客服\rag\vector_store.py", line 78, in load_document
+    documents: list[Document] = get_file_documents(path)
+  File "C:\Users\ASUS\Desktop\萌宠智能客服\rag\vector_store.py", line 60, in get_file_documents
+    return pdf_loader(read_path)
+  File "C:\Users\ASUS\Desktop\萌宠智能客服\utils\file_handler.py", line 55, in pdf_loader
+    return PyPDFLoader(filepath, passwd).load()
+  File "D:\ProgramData\Anaconda3\envs\agent\lib\site-packages\langchain_core\document_loaders\base.py", line 43, in load
+    return list(self.lazy_load())
+  File "D:\ProgramData\Anaconda3\envs\agent\lib\site-packages\langchain_community\document_loaders\pdf.py", line 305, in lazy_load
+    yield from self.parser.lazy_parse(blob)
+  File "D:\ProgramData\Anaconda3\envs\agent\lib\site-packages\langchain_community\document_loaders\parsers\pdf.py", line 360, in lazy_parse
+    raise ImportError(
+ImportError: `pypdf` package not found, please install it with `pip install pypdf`
+2026-09-05 11:52:31,507 - agent - INFO - vector_store.py:96 - [加载知识库]C:\Users\ASUS\Desktop\萌宠智能客服\data\宠物100问.txt 内容加载成功
+2026-09-05 11:52:35,266 - agent - INFO - vector_store.py:96 - [加载知识库]C:\Users\ASUS\Desktop\萌宠智能客服\data\宠物健康问题检测与处理200条.txt 内容加载成功
+2026-09-05 11:52:36,970 - agent - INFO - vector_store.py:96 - [加载知识库]C:\Users\ASUS\Desktop\萌宠智能客服\data\宠物及宠物用品选购指南200条.txt 内容加载成功
+2026-09-05 11:52:38,842 - agent - INFO - vector_store.py:96 - [加载知识库]C:\Users\ASUS\Desktop\萌宠智能客服\data\宠物维护保养200条.txt 内容加载成功

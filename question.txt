@@ -1,0 +1,123 @@
+ 项目概述
+
+  这是一个**「智扫通」扫地/扫拖机器人智能客服系统**，基于 LangChain + 通义千问（DashScope）+ Streamlit
+  实现，核心功能是用 ReAct Agent 自动调用 RAG
+  知识库和多种工具，模拟真人客服为扫地机器人用户提供专业问答和个性化使用报告。
+
+  技术栈
+
+  - LLM：qwen3-max（通义千问），通过 langchain_community.chat_models.tongyi.ChatTongyi 调用
+  - Embedding：text-embedding-v4（DashScope）
+  - 向量库：Chroma（本地持久化到 chroma_db/）
+  - Agent 框架：LangChain create_agent（新版 v1 中间件机制）+ LangGraph runtime
+  - Web 界面：Streamlit（流式输出）
+  - 配置：YAML
+  - 文档加载：PyPDFLoader、TextLoader，分块器 RecursiveCharacterTextSplitter（chunk_size=200, overlap=20）
+
+  项目结构
+
+  项目根/
+  ├── app.py                    # Streamlit 入口
+  ├── md5.text                  # 已加载文件的 MD5（去重记录）
+  ├── agent/
+  │   ├── react_agent.py        # Agent 装配 + 流式调用
+  │   └── tools/
+  │       ├── agent_tools.py    # 7 个 @tool 工具
+  │       └── middleware.py     # 3 个中间件
+  ├── rag/
+  │   ├── vector_store.py       # Chroma + 文档加载 + MD5 去重
+  │   └── rag_service.py        # RAG 总结链（Prompt → LLM → Parser）
+  ├── model/factory.py          # 抽象工厂：ChatModel / Embeddings
+  ├── prompts/                  # 三类提示词：main / rag_summarize / report
+  ├── config/                   # 4 个 YAML 配置
+  ├── data/                     # PDF/TXT 知识库 + external/records.csv（用户使用记录）
+  ├── utils/                    # 配置/路径/日志/MD5/提示词加载
+  ├── chroma_db/                # 向量库持久化目录
+  └── logs/                     # 日志目录
+
+  核心模块细节
+
+  1. Agent 层（agent/react_agent.py）
+  - 用 LangChain 新版 create_agent 一次性装配：模型 + 系统提示词 + 7 个工具 + 3 个中间件
+  - execute_stream() 用 stream_mode="values"，逐 token 推流；通过 context={"report": False}
+  注入运行时上下文，作为提示词切换的"开关"
+
+  2. 7 个工具（agent/tools/agent_tools.py）
+
+  ┌─────────────────────────┬──────────────────────────────────────────────────────────────────────────────────────┐
+  │          工具           │                                         作用                                         │
+  ├─────────────────────────┼──────────────────────────────────────────────────────────────────────────────────────┤
+  │ rag_summarize           │ 调 RAG 服务检索知识库并总结                                                          │
+  ├─────────────────────────┼──────────────────────────────────────────────────────────────────────────────────────┤
+  │ get_weather             │ 城市天气（硬编码假数据）                                                             │
+  ├─────────────────────────┼──────────────────────────────────────────────────────────────────────────────────────┤
+  │ get_user_location       │ 随机返回深圳/合肥/杭州                                                               │
+  ├─────────────────────────┼──────────────────────────────────────────────────────────────────────────────────────┤
+  │ get_user_id             │ 随机返回 1001-1010                                                                   │
+  ├─────────────────────────┼──────────────────────────────────────────────────────────────────────────────────────┤
+  │ get_current_month       │ 随机返回 2025-某月                                                                   │
+  ├─────────────────────────┼──────────────────────────────────────────────────────────────────────────────────────┤
+  │ fetch_external_data     │ 读 data/external/records.csv，按 user_id+month 查使用记录                            │
+  ├─────────────────────────┼──────────────────────────────────────────────────────────────────────────────────────┤
+  │ fill_context_for_report │ 无业务功能，仅作为"触发器"，被调用时通过中间件把 runtime.context["report"] 置为 True │
+  └─────────────────────────┴──────────────────────────────────────────────────────────────────────────────────────┘
+
+  3. 3 个中间件（agent/tools/middleware.py）—— 这个项目最有设计感的地方
+
+  - monitor_tool（@wrap_tool_call）：包一层 try/except 做工具执行日志；特别之处：检测到 fill_context_for_report
+  被调用时，悄悄把 runtime.context["report"] 改成 True，实现"工具调用 → 上下文切换"的联动
+  - log_before_model（@before_model）：模型调用前的状态日志（消息数、最新消息内容）
+  - report_prompt_switch（@dynamic_prompt）：每次模型调用前检查 runtime.context["report"]，为 True 就把系统提示词换成
+  report_prompt.txt（报告写手模板）
+
+  这就是动态提示词切换的完整链路：用户说"生成我的报告" → Agent 主动调用 fill_context_for_report → 中间件翻 context 开关
+  → 下一次模型调用前，dynamic_prompt 中间件换成报告提示词。无需重启服务。
+
+  4. RAG 层
+  - vector_store.py：启动时遍历 data/ 下所有 .txt/.pdf，计算 MD5，与 md5.text 比对去重；新文件用 splitter 切块后塞进
+  Chroma
+  - rag_service.py：PromptTemplate → LLM → StrOutputParser，强制模型"只基于参考资料作答"
+
+  5. 模型工厂（model/factory.py）
+  - 抽象基类 BaseModelFactory，两个子类 ChatModelFactory / EmbeddingsFactory，从 rag.yml 读模型名
+  - 好处：换模型只改 YAML
+
+  6. 提示词（prompts/）
+  - main_prompt.txt（6 KB，最长）：主客服提示词，强制"思考→行动→观察→再思考"的 ReAct 流程，明确规定报告生成必须先调
+  fill_context_for_report
+  - rag_summarize.txt：RAG 总结的严格约束（不准编造、不准扩充）
+  - report_prompt.txt：报告写手模板（Markdown 输出 + 保养建议）
+
+  7. Web 入口（app.py）
+  - Streamlit 单页聊天界面
+  - capture() 生成器：每字符 sleep 0.01s 做"打字机"效果
+  - st.session_state 缓存 agent 实例和对话历史
+
+  数据情况
+
+  md5.text 显示已加载 6 个文件，正好对应 data/ 下的 6 个文档（1 个 PDF + 5 个 TXT）。
+
+  关键设计亮点（也是面试文档里强调的）
+
+  1. ReAct Agent + 中间件解耦：fill_context_for_report 作为"语义触发器"，通过 LangGraph runtime.context
+  跨工具/中间件传递状态，把"业务意图"和"提示词切换"解耦
+  2. MD5 增量加载：生产环境可反复启动而不重复向量化
+  3. YAML 配置化 + 抽象工厂：模型、分块、提示词路径全部配置化
+  4. 流式输出 + 打字机效果：Streamlit write_stream + 自定义生成器
+
+  我发现的问题（要不要修你来决定）
+
+  1. app.py 第 40 行有 bug：response_messages[-1] 取的是最后一段流式片段，不是完整回复。应该在外层 capture() 完成后做
+  "".join(response_messages)
+  2. 工具假数据太假：get_weather/get_user_id/get_current_month/get_user_location 全是 hardcode 随机值，没有真实接入
+  3. 没有持久化对话历史：刷新页面就丢，靠 st.session_state 内存
+  4. data/external/records.csv 用 f.readlines()[1:] 跳表头，如果 CSV 里某字段包含逗号会直接 split 错——没有用真正的 CSV
+  解析
+  5. 没有单元测试：面试文档说"自动运行测试"，但项目里完全没有 tests/ 目录或 pytest 配置
+
+  我的建议
+
+  这是个演示/作品集性质的项目，亮点（中间件、动态提示词、ReAct 流程）写得清楚，跑通 Streamlit
+  没问题。但如果你要拿它当正式作品，最该补的是真实 API 接入、对话持久化、把 app.py 那个 join bug 修掉。
+
+  需要我帮你修哪个问题，或者要我对某个模块做更深入的设计 review？
