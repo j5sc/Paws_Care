@@ -1,0 +1,13 @@
+# python缓存
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# 日志
+logs/*.log
+
+# 本地IDE、claude配置
+.claude/
+.idea/
+.vscode/

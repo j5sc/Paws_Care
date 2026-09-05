@@ -16,7 +16,13 @@
       "Bash(curl -s \"http://localhost:8770/_stcore/health\")",
       "Bash(PYTHONIOENCODING=utf-8 \"D:/ProgramData/Anaconda3/envs/agent/python.exe\" -m streamlit run app.py --server.headless=true --server.port=8771 --browser.gatherUsageStats=false)",
       "Bash(curl -s -o /dev/null -w \"HTTP:%{http_code}\\\\n\" \"http://localhost:8771/\")",
-      "Bash(curl -s \"http://localhost:8771/_stcore/health\")"
+      "Bash(curl -s \"http://localhost:8771/_stcore/health\")",
+      "Bash(PYTHONIOENCODING=utf-8 \"D:/ProgramData/Anaconda3/envs/agent/python.exe\" -c \"from utils.weather_client import fetch_weather; print\\(repr\\(fetch_weather\\('深圳'\\)\\)\\)\")",
+      "Bash(PYTHONIOENCODING=utf-8 D:/ProgramData/Anaconda3/envs/agent/python.exe -c ' *)",
+      "Bash(PYTHONIOENCODING=utf-8 \"D:/ProgramData/Anaconda3/envs/agent/python.exe\" -c \"from utils.weather_client import fetch_weather; print\\(fetch_weather\\('深圳'\\)\\)\")",
+      "Bash(PYTHONIOENCODING=utf-8 \"D:/ProgramData/Anaconda3/envs/agent/python.exe\" -m streamlit run app.py --server.headless=true --server.port=8772 --browser.gatherUsageStats=false)",
+      "Bash(curl -s -o /dev/null -w \"HTTP:%{http_code}\\\\n\" \"http://localhost:8772/\")",
+      "Bash(curl -s \"http://localhost:8772/_stcore/health\")"
     ]
   }
 }

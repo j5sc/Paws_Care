@@ -36,17 +36,16 @@ class VectorStoreService:
 
         def check_md5_hex(md5_for_check: str):
             if not os.path.exists(get_abs_path(chroma_conf["md5_hex_store"])):
-                # 创建文件
                 open(get_abs_path(chroma_conf["md5_hex_store"]), "w", encoding="utf-8").close()
-                return False            # md5 没处理过
+                return False
 
             with open(get_abs_path(chroma_conf["md5_hex_store"]), "r", encoding="utf-8") as f:
                 for line in f.readlines():
                     line = line.strip()
                     if line == md5_for_check:
-                        return True     # md5 处理过
+                        return True
 
-                return False            # md5 没处理过
+                return False
 
         def save_md5_hex(md5_for_check: str):
             with open(get_abs_path(chroma_conf["md5_hex_store"]), "a", encoding="utf-8") as f:
@@ -87,15 +86,12 @@ class VectorStoreService:
                     logger.warning(f"[加载知识库]{path}分片后没有有效文本内容，跳过")
                     continue
 
-                # 将内容存入向量库
                 self.vector_store.add_documents(split_document)
 
-                # 记录这个已经处理好的文件的md5，避免下次重复加载
                 save_md5_hex(md5_hex)
 
                 logger.info(f"[加载知识库]{path} 内容加载成功")
             except Exception as e:
-                # exc_info为True会记录详细的报错堆栈，如果为False仅记录报错信息本身
                 logger.error(f"[加载知识库]{path}加载失败：{str(e)}", exc_info=True)
                 continue
 
@@ -107,7 +103,7 @@ if __name__ == '__main__':
 
     retriever = vs.get_retriever()
 
-    res = retriever.invoke("迷路")
+    res = retriever.invoke("金毛")
     for r in res:
         print(r.page_content)
         print("-"*20)

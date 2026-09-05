@@ -1,7 +1,4 @@
-"""
-yaml
-k: v
-"""
+
 import yaml
 from utils.path_tool import get_abs_path
 
@@ -26,10 +23,16 @@ def load_agent_config(config_path: str=get_abs_path("config/agent.yml"), encodin
         return yaml.load(f, Loader=yaml.FullLoader)
 
 
+def load_weather_config(config_path: str=get_abs_path("config/weather.yml"), encoding: str="utf-8"):
+    with open(config_path, "r", encoding=encoding) as f:
+        return yaml.load(f, Loader=yaml.FullLoader)
+
+
 rag_conf = load_rag_config()
 chroma_conf = load_chroma_config()
 prompts_conf = load_prompts_config()
 agent_conf = load_agent_config()
+weather_conf = load_weather_config()
 
 
 if __name__ == '__main__':

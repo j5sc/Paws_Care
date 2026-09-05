@@ -1,0 +1,5 @@
+base_url: https://wttr.in
+timeout: 5
+user_agent: Mozilla/5.0 (PetCareAgent)
+format: j1
+language: zh

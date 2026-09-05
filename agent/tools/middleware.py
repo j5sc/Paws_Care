@@ -11,11 +11,10 @@ from utils.logger_handler import logger
 
 @wrap_tool_call
 def monitor_tool(
-        # 请求的数据封装
         request: ToolCallRequest,
-        # 执行的函数本身
+
         handler: Callable[[ToolCallRequest], ToolMessage | Command],
-) -> ToolMessage | Command:             # 工具执行的监控
+) -> ToolMessage | Command:
     logger.info(f"[tool monitor]执行工具：{request.tool_call['name']}")
     logger.info(f"[tool monitor]传入参数：{request.tool_call['args']}")
 
@@ -35,7 +34,7 @@ def monitor_tool(
 @before_model
 def log_before_model(
         state: AgentState,          # 整个Agent智能体中的状态记录
-        runtime: Runtime,           # 记录了整个执行过程中的上下文信息
+        runtime: Runtime,
 ):         # 在模型执行前输出日志
     logger.info(f"[log_before_model]即将调用模型，带有{len(state['messages'])}条消息。")
 
@@ -45,9 +44,9 @@ def log_before_model(
 
 
 @dynamic_prompt                 # 每一次在生成提示词之前，调用此函数
-def report_prompt_switch(request: ModelRequest):     # 动态切换提示词
+def report_prompt_switch(request: ModelRequest):
     is_report = request.runtime.context.get("report", False)
-    if is_report:               # 是报告生成场景，返回报告生成提示词内容
+    if is_report:
         return load_report_prompts()
 
     return load_system_prompts()

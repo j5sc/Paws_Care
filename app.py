@@ -5,7 +5,7 @@ import streamlit as st
 from agent.react_agent import ReactAgent
 
 st.set_page_config(
-    page_title="萌宠智能客服",
+    page_title="萌爪管家",
     page_icon="🐾",
     layout="wide",
     initial_sidebar_state="expanded",
@@ -90,6 +90,58 @@ section[data-testid="stSidebar"] [data-testid="stMarkdownContainer"] p {
 [data-testid="stChatMessage"] li,
 [data-testid="stChatMessage"] span {
     color: var(--text-main) !important;
+}
+
+[data-testid="stMain"] h1,
+[data-testid="stMain"] h2,
+[data-testid="stMain"] h3,
+[data-testid="stMain"] h4,
+[data-testid="stMain"] h5,
+[data-testid="stMain"] h6,
+[data-testid="stMain"] [data-testid="stHeadingWithActionElements"] h1,
+[data-testid="stMain"] [data-testid="stHeadingWithActionElements"] h2,
+[data-testid="stMain"] [data-testid="stHeadingWithActionElements"] h3,
+[data-testid="stMain"] [data-testid="stHeadingWithActionElements"] h4,
+[data-testid="stMain"] [data-testid="stHeadingWithActionElements"] h5,
+[data-testid="stMain"] [data-testid="stHeadingWithActionElements"] h6,
+[data-testid="stMain"] [data-testid="stMarkdownContainer"] h1,
+[data-testid="stMain"] [data-testid="stMarkdownContainer"] h2,
+[data-testid="stMain"] [data-testid="stMarkdownContainer"] h3,
+[data-testid="stMain"] [data-testid="stMarkdownContainer"] h4 {
+    color: #1F1A17 !important;
+    -webkit-text-fill-color: #1F1A17 !important;
+    background: none !important;
+    background-image: none !important;
+    -webkit-background-clip: initial !important;
+    background-clip: initial !important;
+    font-weight: 700 !important;
+}
+[data-testid="stMain"] [data-testid="stMarkdownContainer"] h1 { font-size: 1.8rem !important; margin-top: 0.5rem !important; }
+[data-testid="stMain"] [data-testid="stMarkdownContainer"] h2 { font-size: 1.4rem !important; }
+[data-testid="stMain"] [data-testid="stMarkdownContainer"] h3 { font-size: 1.15rem !important; }
+
+[data-testid="stMain"] p,
+[data-testid="stMain"] li,
+[data-testid="stMain"] span,
+[data-testid="stMain"] strong,
+[data-testid="stMain"] em,
+[data-testid="stMain"] code,
+[data-testid="stMain"] [data-testid="stMarkdownContainer"] p,
+[data-testid="stMain"] [data-testid="stMarkdownContainer"] li,
+[data-testid="stMain"] [data-testid="stMarkdownContainer"] strong {
+    color: var(--text-main) !important;
+}
+[data-testid="stMain"] [data-testid="stMarkdownContainer"] a {
+    color: var(--primary) !important;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    color: #1F1A17 !important;
+    -webkit-text-fill-color: #1F1A17 !important;
+    background: none !important;
+    background-image: none !important;
+    -webkit-background-clip: initial !important;
+    background-clip: initial !important;
 }
 
 [data-testid="stChatMessage"]:has([data-testid="chatAvatarIcon-user"]) {
@@ -348,14 +400,11 @@ def _auto_title(text: str) -> str:
 
 # ---------- 侧边栏 ----------
 with st.sidebar:
-    st.markdown("### 🐾 萌宠客服")
+    st.markdown("### 🐾 萌爪管家")
     st.caption("您的专属宠物健康顾问")
 
     st.markdown('<div class="sidebar-stat"><div class="label">用户</div>'
                 f'<div class="value">{st.session_state["user_profile"]["name"]}</div></div>',
-                unsafe_allow_html=True)
-    st.markdown('<div class="sidebar-stat"><div class="label">所在城市</div>'
-                f'<div class="value">{st.session_state["user_profile"]["city"]}</div></div>',
                 unsafe_allow_html=True)
 
     user_count = sum(1 for m in _current_conv()["messages"] if m["role"] == "user")
@@ -458,7 +507,7 @@ with st.sidebar:
 
 # ---------- 主体 ----------
 st.markdown(
-    '<div class="hero"><h1>🐾 萌宠智能客服</h1>'
+    '<div class="hero"><h1>🐾 萌爪管家</h1>'
     '<p>专注猫狗与家养宠物的健康、饲养与护理咨询</p></div>',
     unsafe_allow_html=True,
 )
@@ -485,7 +534,7 @@ if not _current_conv()["messages"]:
                 st.rerun()
     st.markdown("</div>", unsafe_allow_html=True)
 
-prompt = st.session_state.get("pending_prompt") or st.chat_input("向萌宠客服提问…")
+prompt = st.session_state.get("pending_prompt") or st.chat_input("向萌爪管家提问…")
 
 if prompt:
     st.session_state["pending_prompt"] = None
